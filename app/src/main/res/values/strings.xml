@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">moneymanager</string>
+
+    <string-array name="theme_options">
+        <item>Select Theme</item>
+        <item>Default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
 </resources>
