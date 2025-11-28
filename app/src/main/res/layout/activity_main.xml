@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Header ribbon -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,15 +32,16 @@
             android:layout_gravity="center|center_horizontal|center_vertical"
             android:layout_weight="1"
             android:background="@color/black"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="center"
             android:text="Total: PHP 6000"
             android:textColor="@color/white" />
-
     </LinearLayout>
 
+    <!-- Main content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -47,4 +49,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <!-- Bottom Ribbon (custom view) -->
+    <include
+        layout="@layout/bottomribbon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
