@@ -51,8 +51,8 @@
     </LinearLayout>
 
     <!-- Bottom Ribbon (custom view) -->
-    <include
-        layout="@layout/bottomribbon"
+    <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.bottomRibbon
+        android:id="@+id/bottomRibbon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

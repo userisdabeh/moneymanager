@@ -1,6 +1,7 @@
 package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -36,6 +37,21 @@ class SettingsActivity : ComponentActivity() {
                 }
                 .show()
         }
-    }
+
+        val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
+
+        bottomRibbon.btnHome.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        bottomRibbon.btnSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        bottomRibbon.btnTag.setOnClickListener {
+            // Replace with your Categories/Tags activity
+            // startActivity(Intent(this, CategoriesActivity::class.java))
+        }
+    }// end of onCreate
 }
 

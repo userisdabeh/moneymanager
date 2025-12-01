@@ -25,6 +25,21 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
+
+        val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
+
+        bottomRibbon.btnHome.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        bottomRibbon.btnSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        bottomRibbon.btnTag.setOnClickListener {
+            // Replace with your Categories/Tags activity
+           // startActivity(Intent(this, CategoriesActivity::class.java))
+        }
     }
 }
 
