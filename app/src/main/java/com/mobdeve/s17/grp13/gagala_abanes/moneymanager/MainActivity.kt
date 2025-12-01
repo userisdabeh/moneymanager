@@ -22,12 +22,12 @@ class MainActivity : ComponentActivity() {
 
         val button: Button = findViewById(R.id.currSelector)
         button.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
+            val intent = Intent(this, SettingsActivity::class.java) //CHANGE TO SWAP CURRENCY LATER
             startActivity(intent)
         }
 
+        //bottom ribbon functionality
         val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
-
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
@@ -37,9 +37,9 @@ class MainActivity : ComponentActivity() {
         }
 
         bottomRibbon.btnTag.setOnClickListener {
-            // Replace with your Categories/Tags activity
-           // startActivity(Intent(this, CategoriesActivity::class.java))
+           startActivity(Intent(this, ETagsActivity::class.java))
         }
+        //end of bottom ribbon functionality
     }
 }
 

@@ -38,8 +38,8 @@ class SettingsActivity : ComponentActivity() {
                 .show()
         }
 
+        //bottom ribbon functionality
         val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
-
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
@@ -49,9 +49,9 @@ class SettingsActivity : ComponentActivity() {
         }
 
         bottomRibbon.btnTag.setOnClickListener {
-            // Replace with your Categories/Tags activity
-            // startActivity(Intent(this, CategoriesActivity::class.java))
+            startActivity(Intent(this, ETagsActivity::class.java))
         }
+        //end of bottom ribbon functionality
     }// end of onCreate
 }
 

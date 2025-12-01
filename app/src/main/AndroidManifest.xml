@@ -28,6 +28,16 @@
             android:exported="true"
             android:label="Settings" />
 
+        <activity
+            android:name=".ETagsActivity"
+            android:exported="true"
+            android:label="Tags - Expense" />
+
+        <activity
+            android:name=".ITagsActivity"
+            android:exported="true"
+            android:label="Tags - Income" />
+
     </application>
 
 </manifest>

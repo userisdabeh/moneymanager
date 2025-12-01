@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_green">
+
+    <!-- Title ribbon -->
+    <TextView
+        android:id="@+id/setTopRibbon"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/black"
+        android:gravity="center_vertical|start"
+        android:paddingStart="16dp"
+        android:text="Add Tags"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="24sp" />
+
+    <!-- Expense and Income buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <Button
+            android:id="@+id/expenseButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="Expense"
+            android:textAllCaps="false"
+            android:textColor="@color/white"/>
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:background="@color/transparent" />
+
+        <Button
+            android:id="@+id/incomeButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="Income"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+
+    <!-- tag buttons -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="4"
+        android:alignmentMode="alignMargins"
+        android:rowOrderPreserved="false"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true">
+
+        <Button
+            android:id="@+id/education"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:background="@drawable/bluedu"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/food"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:background="@drawable/redfood"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/leisure"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:background="@drawable/grnles"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/home"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:textSize="24sp"
+            android:background="@drawable/ylwhome"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/transpo"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/orgtranspo"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/moretags"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:text="..."
+            android:textSize="24sp"
+            android:background="@drawable/clrgry"
+            android:textColor="@color/black" />
+    </GridLayout> <!--end of tag buttons-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Include bottom ribbon -->
+    <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.bottomRibbon
+        android:id="@+id/bottomRibbon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

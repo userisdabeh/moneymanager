@@ -28,7 +28,7 @@
         android:layout_marginLeft="24dp"
         android:background="@color/white" />
 
-    <!-- Spacer to push the button down -->
+    <!-- Spacer to push delete button down -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,8 +44,6 @@
         android:text="Delete all data"
         android:textColor="@color/white"
         />
-
-
 
     <!-- Include bottom ribbon -->
     <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.bottomRibbon
