@@ -70,7 +70,7 @@
         <Button
             android:id="@+id/education"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/bluedu"
@@ -79,7 +79,7 @@
         <Button
             android:id="@+id/food"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/redfood"
@@ -88,7 +88,7 @@
         <Button
             android:id="@+id/leisure"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/grnles"
@@ -97,7 +97,7 @@
         <Button
             android:id="@+id/home"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:textSize="24sp"
             android:background="@drawable/ylwhome"
@@ -106,7 +106,7 @@
         <Button
             android:id="@+id/transpo"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:background="@drawable/orgtranspo"
             android:textColor="@color/black" />
@@ -114,7 +114,7 @@
         <Button
             android:id="@+id/moretags"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:text="..."
             android:textSize="24sp"

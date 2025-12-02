@@ -11,17 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/bk2Etag"
             android:layout_width="60dp"
             android:layout_height="56dp"
             android:background="@color/black"
-            android:gravity="center_vertical|start"
-            android:paddingStart="16dp"
-            android:text="b"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:src="@drawable/arrow_back"
+            android:tint="@color/white"
+            android:contentDescription="Back arrow" />
 
         <TextView
             android:id="@+id/setTopRibbon"
@@ -51,7 +48,7 @@
             android:id="@+id/eTag_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/clrgry" />
+            android:src="@drawable/greyedu" />
 
         <EditText
             android:id="@+id/etagNameInput"
@@ -104,20 +101,21 @@
 
     <!-- tag buttons -->
     <GridLayout
-        android:id="@+id/incTagGrid_ct"
+        android:id="@+id/expTagGrid_ct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:columnCount="4"
+        android:rowCount="2"
         android:alignmentMode="alignMargins"
-        android:rowOrderPreserved="false"
-        android:columnOrderPreserved="false"
+        android:rowOrderPreserved="true"
+        android:columnOrderPreserved="true"
         android:useDefaultMargins="true">
 
         <Button
             android:id="@+id/education"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/greyedu"
@@ -126,7 +124,7 @@
         <Button
             android:id="@+id/food"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/greyfood"
@@ -135,7 +133,7 @@
         <Button
             android:id="@+id/leisure"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:background="@drawable/greyles" />
@@ -143,7 +141,7 @@
         <Button
             android:id="@+id/home"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:textSize="24sp"
             android:background="@drawable/greyhome"
@@ -152,14 +150,14 @@
         <Button
             android:id="@+id/transpo"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:background="@drawable/greytranspo" />
 
         <Button
             android:id="@+id/moretags"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_columnWeight="1"
             android:text="..."
             android:textSize="24sp"
@@ -244,6 +242,5 @@
     <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.BottomRibbon
         android:id="@+id/bottomRibbon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="60dp" />
 </LinearLayout>

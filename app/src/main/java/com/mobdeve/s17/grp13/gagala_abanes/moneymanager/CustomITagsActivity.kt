@@ -3,6 +3,7 @@ package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 
 class CustomITagsActivity : ComponentActivity() {
@@ -10,7 +11,7 @@ class CustomITagsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_itags)
 
-        val bk2Itag: Button = findViewById(R.id.bk2Itag)
+        val bk2Itag: ImageButton = findViewById(R.id.bk2Itag)
         val expenseButton: Button = findViewById(R.id.expenseButton)
 
         bk2Itag.setOnClickListener {
