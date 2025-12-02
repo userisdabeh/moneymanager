@@ -4,34 +4,77 @@
     android:layout_height="56dp"
     android:orientation="horizontal"
     android:background="@color/black"
-    android:gravity="center"
-    android:padding="8dp">
+    android:gravity="center">
 
-    <Button
+    <!-- Tags -->
+    <LinearLayout
         android:id="@+id/btnTag"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Categories"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground">
 
-    <Button
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_tags_unfilled"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tags"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Home -->
+    <LinearLayout
         android:id="@+id/btnHome"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Home"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground">
 
-    <Button
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_home_filled"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Settings -->
+    <LinearLayout
         android:id="@+id/btnSettings"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Settings"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_settings_unfilled"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
 </LinearLayout>

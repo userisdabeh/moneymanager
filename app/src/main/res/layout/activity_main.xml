@@ -54,6 +54,6 @@
     <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.bottomRibbon
         android:id="@+id/bottomRibbon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="60dp"/>
 
 </LinearLayout>
