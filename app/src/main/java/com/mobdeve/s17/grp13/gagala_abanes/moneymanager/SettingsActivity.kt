@@ -7,36 +7,55 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.activity.ComponentActivity
+import android.view.View
+import android.widget.AdapterView
 
 class SettingsActivity : ComponentActivity() {
+
+    private fun applyTheme(layout: View, mode: String) {
+        when (mode) {
+            "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
+            "Light" -> layout.setBackgroundColor(getColor(R.color.app_light_bg))
+            "Dark" -> layout.setBackgroundColor(getColor(R.color.app_dark_bg))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val rootLayout = findViewById<android.view.View>(R.id.settingsRoot)
-
+        val rootLayout = findViewById<View>(R.id.settingsRoot)
         val spinner: Spinner = findViewById(R.id.theme_dropdwn)
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.theme_options,
-            android.R.layout.simple_spinner_item
-        )
+        val deleteButton: Button = findViewById(R.id.deldata)
+        val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
+        val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
+
+        // --- Adapter ---
+        val themes = resources.getStringArray(R.array.theme_options)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, themes)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        spinner.setOnItemSelectedListener(object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                when (spinner.selectedItem.toString()) {
-                    "Default" -> rootLayout.setBackgroundColor(getColor(R.color.app_default_bg))
-                    "Light"   -> rootLayout.setBackgroundColor(getColor(R.color.app_light_bg))   // white
-                    "Dark"    -> rootLayout.setBackgroundColor(getColor(R.color.app_dark_bg))    // dark gray
-                }
+        // --- Load saved theme ---
+        val savedTheme = prefs.getString("theme", "Default")!!
+        applyTheme(rootLayout, savedTheme)
+
+        // --- Set spinner to saved theme ---
+        val spinnerPosition = themes.indexOf(savedTheme).takeIf { it >= 0 } ?: 0
+        spinner.setSelection(spinnerPosition, false)
+
+        // --- Listener ---
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedTheme = themes[position]
+                prefs.edit().putString("theme", selectedTheme).apply()
+                applyTheme(rootLayout, selectedTheme)
             }
 
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
-        })
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
 
-        val deleteButton: Button = findViewById(R.id.deldata)
+        // --- Delete button ---
         deleteButton.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Confirm Delete")
@@ -46,7 +65,7 @@ class SettingsActivity : ComponentActivity() {
                 .show()
         }
 
-        val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
+        // --- Bottom ribbon ---
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
@@ -55,5 +74,3 @@ class SettingsActivity : ComponentActivity() {
         }
     }
 }
-
-
