@@ -1,9 +1,7 @@
 package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.activity.ComponentActivity
 
@@ -26,7 +24,7 @@ class CustomITagsActivity : ComponentActivity() {
         }
 
         //bottom ribbon functionality
-        val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
+        val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }

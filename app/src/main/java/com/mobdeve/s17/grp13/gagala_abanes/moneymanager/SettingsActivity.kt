@@ -39,7 +39,7 @@ class SettingsActivity : ComponentActivity() {
         }
 
         //bottom ribbon functionality
-        val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
+        val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }

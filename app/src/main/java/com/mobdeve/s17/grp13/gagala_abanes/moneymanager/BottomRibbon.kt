@@ -1,21 +1,19 @@
 package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.LinearLayout
 
-class bottomRibbon @JvmOverloads constructor(
+class BottomRibbon @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    val btnTag: Button
-    val btnHome: Button
-    val btnSettings: Button
+    val btnTag: LinearLayout
+    val btnHome: LinearLayout
+    val btnSettings: LinearLayout
 
     init {
         orientation = HORIZONTAL

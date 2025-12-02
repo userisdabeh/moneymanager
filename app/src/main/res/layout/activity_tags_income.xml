@@ -131,7 +131,7 @@
         android:layout_weight="1" />
 
     <!-- Include bottom ribbon -->
-    <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.bottomRibbon
+    <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.BottomRibbon
         android:id="@+id/bottomRibbon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
