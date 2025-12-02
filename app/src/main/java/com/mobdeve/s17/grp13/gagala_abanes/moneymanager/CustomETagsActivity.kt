@@ -5,23 +5,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.ComponentActivity
 
-class ITagsActivity : ComponentActivity() {
+class CustomETagsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tags_income)
+        setContentView(R.layout.activity_custom_etags)
 
-        val toExpBtn: Button = findViewById(R.id.expenseButton)
-        val toCtIBtn: Button = findViewById(R.id.moretags)
+        val bk2Etag: Button = findViewById(R.id.bk2Etag)
+        val incomeButton: Button = findViewById(R.id.incomeButton)
 
-        toExpBtn.setOnClickListener {
+        bk2Etag.setOnClickListener {
             val intent = Intent(this, ETagsActivity::class.java)
             startActivity(intent)
         }
 
-        toCtIBtn.setOnClickListener {
+        incomeButton.setOnClickListener {
             val intent = Intent(this, CustomITagsActivity::class.java)
             startActivity(intent)
         }
@@ -42,4 +41,3 @@ class ITagsActivity : ComponentActivity() {
         //end of bottom ribbon functionality
     }// end of onCreate
 }
-

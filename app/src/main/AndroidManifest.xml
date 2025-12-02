@@ -38,6 +38,16 @@
             android:exported="true"
             android:label="Tags - Income" />
 
+        <activity
+            android:name=".CustomETagsActivity"
+            android:exported="true"
+            android:label="Custom Tags - Expense" />
+
+        <activity
+            android:name=".CustomITagsActivity"
+            android:exported="true"
+            android:label="Custom Tags - Income" />
+
     </application>
 
 </manifest>

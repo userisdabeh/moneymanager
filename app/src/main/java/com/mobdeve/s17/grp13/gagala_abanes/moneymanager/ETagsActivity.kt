@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Spinner
 import androidx.activity.ComponentActivity
 
 class ETagsActivity : ComponentActivity() {
@@ -13,12 +12,19 @@ class ETagsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tags_expense)
 
-        val button: Button = findViewById(R.id.incomeButton)
-        button.setOnClickListener {
+        val toIncBtn: Button = findViewById(R.id.incomeButton)
+        val toCtEBtn: Button = findViewById(R.id.moretags)
+
+        toIncBtn.setOnClickListener {
             val intent = Intent(this, ITagsActivity::class.java)
             startActivity(intent)
         }
 
+        toCtEBtn.setOnClickListener {
+            val intent = Intent(this, CustomETagsActivity::class.java)
+            startActivity(intent)
+        }
+        
         //bottom ribbon functionality
         val bottomRibbon: bottomRibbon = findViewById(R.id.bottomRibbon)
         bottomRibbon.btnHome.setOnClickListener {
