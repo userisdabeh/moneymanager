@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 class ETagsActivity : ComponentActivity() {
 
+    //theme stuff
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
             "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))

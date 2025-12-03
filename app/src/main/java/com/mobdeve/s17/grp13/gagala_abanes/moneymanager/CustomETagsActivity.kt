@@ -13,6 +13,7 @@ class CustomETagsActivity : ComponentActivity() {
     private var selectedColor: String = "grey"
     private lateinit var eTagIcon: ImageView
 
+    //theme stuff
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
             "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
@@ -52,7 +53,7 @@ class CustomETagsActivity : ComponentActivity() {
         findViewById<Button>(R.id.home).setOnClickListener { selectedIcon = "home"; updateIcon() }
         findViewById<Button>(R.id.transpo).setOnClickListener { selectedIcon = "transpo"; updateIcon() }
 
-        // **Send selected icon back to ETagsActivity only on Add button**
+        //send selected icon back to ETagsActivity
         expAddButton.setOnClickListener {
             val resultIntent = Intent().apply {
                 putExtra("selectedIcon", "${selectedColor}${selectedIcon}")

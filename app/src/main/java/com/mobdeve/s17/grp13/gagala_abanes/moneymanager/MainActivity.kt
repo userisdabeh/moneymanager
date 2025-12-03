@@ -8,6 +8,7 @@ import android.view.View
 
 class MainActivity : ComponentActivity() {
 
+    //theme stuff
     private fun applyTheme(root: View, mode: String) {
         when (mode) {
             "Default" -> root.setBackgroundColor(getColor(R.color.app_default_bg))

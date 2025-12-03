@@ -12,6 +12,7 @@ import android.widget.AdapterView
 
 class SettingsActivity : ComponentActivity() {
 
+    //theme stuff
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
             "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))

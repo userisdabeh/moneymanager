@@ -8,6 +8,7 @@ import android.view.View
 
 class ITagsActivity : ComponentActivity() {
 
+    //theme stuff
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
             "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
