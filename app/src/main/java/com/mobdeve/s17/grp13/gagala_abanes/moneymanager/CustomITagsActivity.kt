@@ -5,8 +5,18 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.ComponentActivity
+import android.view.View
 
 class CustomITagsActivity : ComponentActivity() {
+
+    private fun applyTheme(layout: View, mode: String) {
+        when (mode) {
+            "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
+            "Light" -> layout.setBackgroundColor(getColor(R.color.app_light_bg))
+            "Dark" -> layout.setBackgroundColor(getColor(R.color.app_dark_bg))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_itags)
@@ -23,6 +33,13 @@ class CustomITagsActivity : ComponentActivity() {
             val intent = Intent(this, CustomETagsActivity::class.java)
             startActivity(intent)
         }
+
+        //light mode stuff
+        val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
+        val savedTheme = prefs.getString("theme", "Default")!!
+
+        val rootLayout = findViewById<View>(R.id.rootLayout)
+        applyTheme(rootLayout, savedTheme)
 
         //bottom ribbon functionality
         val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)

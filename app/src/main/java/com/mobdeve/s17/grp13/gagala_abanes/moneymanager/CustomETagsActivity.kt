@@ -6,11 +6,20 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.ComponentActivity
+import android.view.View
 
 class CustomETagsActivity : ComponentActivity() {
     private var selectedIcon: String = "edu"
     private var selectedColor: String = "grey"
     private lateinit var eTagIcon: ImageView
+
+    private fun applyTheme(layout: View, mode: String) {
+        when (mode) {
+            "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
+            "Light" -> layout.setBackgroundColor(getColor(R.color.app_light_bg))
+            "Dark" -> layout.setBackgroundColor(getColor(R.color.app_dark_bg))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +60,13 @@ class CustomETagsActivity : ComponentActivity() {
             setResult(RESULT_OK, resultIntent)
             finish()
         }
+
+        //light mode stuff
+        val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
+        val savedTheme = prefs.getString("theme", "Default")!!
+
+        val rootLayout = findViewById<View>(R.id.rootLayout)
+        applyTheme(rootLayout, savedTheme)
 
         // Bottom ribbon
         val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)

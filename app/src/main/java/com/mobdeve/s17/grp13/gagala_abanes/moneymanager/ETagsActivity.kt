@@ -2,6 +2,7 @@ package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.activity.ComponentActivity
@@ -9,6 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.activity.result.contract.ActivityResultContracts
 
 class ETagsActivity : ComponentActivity() {
+
+    private fun applyTheme(layout: View, mode: String) {
+        when (mode) {
+            "Default" -> layout.setBackgroundColor(getColor(R.color.app_default_bg))
+            "Light" -> layout.setBackgroundColor(getColor(R.color.app_light_bg))
+            "Dark" -> layout.setBackgroundColor(getColor(R.color.app_dark_bg))
+        }
+    }
 
     private val customTagLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -25,6 +34,13 @@ class ETagsActivity : ComponentActivity() {
 
         val toIncBtn: Button = findViewById(R.id.incomeButton)
         val toCtEBtn: Button = findViewById(R.id.moretags)
+
+        //light mode stuff
+        val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
+        val savedTheme = prefs.getString("theme", "Default")!!
+
+        val rootLayout = findViewById<View>(R.id.rootLayout)
+        applyTheme(rootLayout, savedTheme)
 
         toIncBtn.setOnClickListener {
             startActivity(Intent(this, ITagsActivity::class.java))
