@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 class ETagsActivity : ComponentActivity() {
 
+    private lateinit var db: TagDatabase
+
     //theme stuff
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
@@ -43,6 +45,10 @@ class ETagsActivity : ComponentActivity() {
         val rootLayout = findViewById<View>(R.id.rootLayout)
         applyTheme(rootLayout, savedTheme)
 
+        db = TagDatabase(this)
+        loadSavedIcons()
+
+
         toIncBtn.setOnClickListener {
             startActivity(Intent(this, ITagsActivity::class.java))
         }
@@ -63,10 +69,19 @@ class ETagsActivity : ComponentActivity() {
         }
     }
 
+    private fun loadSavedIcons() {
+        val gridLayout = findViewById<GridLayout>(R.id.expTagGrid)
+        val saved = db.getAllExpenseTags()
+
+        saved.forEach { iconName ->
+            addIconToGrid(iconName)
+        }
+    }
+
     private fun addIconToGrid(iconName: String) {
         val gridLayout = findViewById<GridLayout>(R.id.expTagGrid)
         val resId = resources.getIdentifier(iconName, "drawable", packageName)
-        if (resId == 0) return // skip if drawable not found
+        if (resId == 0) return
 
         val newButton = Button(this).apply {
             layoutParams = GridLayout.LayoutParams().apply {
@@ -78,14 +93,33 @@ class ETagsActivity : ComponentActivity() {
             }
             background = ContextCompat.getDrawable(this@ETagsActivity, resId)
             text = ""
+
+            // HOLD TO DELETE
+            setOnLongClickListener {
+                confirmDelete(this, iconName)
+                true
+            }
         }
 
-        // Insert before "moretags" button
         val moreTagsIndex = (0 until gridLayout.childCount).firstOrNull {
             gridLayout.getChildAt(it).id == R.id.moretags
         } ?: gridLayout.childCount
 
         gridLayout.addView(newButton, moreTagsIndex)
+    }
+
+    private fun confirmDelete(btn: Button, iconName: String) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Delete Tag?")
+            .setMessage("Remove this tag permanently?")
+            .setPositiveButton("Delete") { _, _ ->
+                db.deleteTag(iconName)
+
+                val grid = findViewById<GridLayout>(R.id.expTagGrid)
+                grid.removeView(btn)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()

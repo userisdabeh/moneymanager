@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import android.widget.Button
 import android.content.Intent
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s17.grp13.gagala_abanes.moneymanager.TagAdapter
 
 class MainActivity : ComponentActivity() {
 
@@ -33,6 +35,9 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, SettingsActivity::class.java) //CHANGE TO SWAP CURRENCY LATER
             startActivity(intent)
         }
+
+        val recyclerView: RecyclerView = findViewById(R.id.mainRecycler)
+        recyclerView.adapter = TagAdapter(emptyList<String>())
 
         //bottom ribbon functionality
         val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)

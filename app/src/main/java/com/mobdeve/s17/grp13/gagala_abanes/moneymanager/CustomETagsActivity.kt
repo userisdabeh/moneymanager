@@ -12,6 +12,8 @@ class CustomETagsActivity : ComponentActivity() {
     private var selectedIcon: String = "edu"
     private var selectedColor: String = "grey"
     private lateinit var eTagIcon: ImageView
+    private lateinit var db: TagDatabase
+
 
     //theme stuff
     private fun applyTheme(layout: View, mode: String) {
@@ -31,6 +33,8 @@ class CustomETagsActivity : ComponentActivity() {
         val bk2Etag: ImageButton = findViewById(R.id.bk2Etag)
         val incomeButton: Button = findViewById(R.id.incomeButton)
         val expAddButton: Button = findViewById(R.id.expAddButton)
+        db = TagDatabase(this)
+
 
         // Navigation buttons
         bk2Etag.setOnClickListener { finish() }
@@ -55,12 +59,18 @@ class CustomETagsActivity : ComponentActivity() {
 
         //send selected icon back to ETagsActivity
         expAddButton.setOnClickListener {
+            val finalName = "${selectedColor}${selectedIcon}"
+
+            // SAVE TO DATABASE
+            db.insertExpenseTag(finalName)
+
             val resultIntent = Intent().apply {
-                putExtra("selectedIcon", "${selectedColor}${selectedIcon}")
+                putExtra("selectedIcon", finalName)
             }
             setResult(RESULT_OK, resultIntent)
             finish()
         }
+
 
         //light mode stuff
         val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
