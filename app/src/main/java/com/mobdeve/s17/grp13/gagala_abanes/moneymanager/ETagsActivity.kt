@@ -22,6 +22,7 @@ class ETagsActivity : ComponentActivity() {
         }
     }
 
+    //
     private val customTagLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -35,8 +36,8 @@ class ETagsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tags_expense)
 
-        val toIncBtn: Button = findViewById(R.id.incomeButton)
-        val toCtEBtn: Button = findViewById(R.id.moretags)
+        val toIncBtn: Button = findViewById(R.id.incomeButton) //to income side
+        val toCtEBtn: Button = findViewById(R.id.moretags) //to custom tags
 
         //light mode stuff
         val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
@@ -48,7 +49,6 @@ class ETagsActivity : ComponentActivity() {
         db = TagDatabase(this)
         loadSavedIcons()
 
-
         toIncBtn.setOnClickListener {
             startActivity(Intent(this, ITagsActivity::class.java))
         }
@@ -59,7 +59,7 @@ class ETagsActivity : ComponentActivity() {
             customTagLauncher.launch(intent)
         }
 
-        // Bottom ribbon
+        //bottom ribbon functionality
         val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
@@ -67,10 +67,9 @@ class ETagsActivity : ComponentActivity() {
         bottomRibbon.btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
-    }
+    }//end of onCreate
 
     private fun loadSavedIcons() {
-        val gridLayout = findViewById<GridLayout>(R.id.expTagGrid)
         val saved = db.getAllExpenseTags()
 
         saved.forEach { iconName ->
@@ -94,7 +93,7 @@ class ETagsActivity : ComponentActivity() {
             background = ContextCompat.getDrawable(this@ETagsActivity, resId)
             text = ""
 
-            // HOLD TO DELETE
+            //hold to delete
             setOnLongClickListener {
                 confirmDelete(this, iconName)
                 true
@@ -113,7 +112,7 @@ class ETagsActivity : ComponentActivity() {
             .setTitle("Delete Tag?")
             .setMessage("Remove this tag permanently?")
             .setPositiveButton("Delete") { _, _ ->
-                db.deleteTag(iconName)
+                db.deleteExpenseTag(iconName)
 
                 val grid = findViewById<GridLayout>(R.id.expTagGrid)
                 grid.removeView(btn)

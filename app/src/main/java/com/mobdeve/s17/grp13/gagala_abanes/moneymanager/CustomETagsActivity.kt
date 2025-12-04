@@ -31,12 +31,12 @@ class CustomETagsActivity : ComponentActivity() {
         eTagIcon = findViewById(R.id.eTag_icon)
 
         val bk2Etag: ImageButton = findViewById(R.id.bk2Etag)
-        val incomeButton: Button = findViewById(R.id.incomeButton)
+        val incomeButton: Button = findViewById(R.id.incomeButton)//to income side
         val expAddButton: Button = findViewById(R.id.expAddButton)
         db = TagDatabase(this)
 
 
-        // Navigation buttons
+        //back to main expense tags
         bk2Etag.setOnClickListener { finish() }
         incomeButton.setOnClickListener {
             startActivity(Intent(this, CustomITagsActivity::class.java))
@@ -57,11 +57,11 @@ class CustomETagsActivity : ComponentActivity() {
         findViewById<Button>(R.id.home).setOnClickListener { selectedIcon = "home"; updateIcon() }
         findViewById<Button>(R.id.transpo).setOnClickListener { selectedIcon = "transpo"; updateIcon() }
 
-        //send selected icon back to ETagsActivity
+        //send icon to ETagsActivity
         expAddButton.setOnClickListener {
             val finalName = "${selectedColor}${selectedIcon}"
 
-            // SAVE TO DATABASE
+            //insert into db
             db.insertExpenseTag(finalName)
 
             val resultIntent = Intent().apply {
@@ -71,7 +71,6 @@ class CustomETagsActivity : ComponentActivity() {
             finish()
         }
 
-
         //light mode stuff
         val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
         val savedTheme = prefs.getString("theme", "Default")!!
@@ -79,22 +78,22 @@ class CustomETagsActivity : ComponentActivity() {
         val rootLayout = findViewById<View>(R.id.rootLayout)
         applyTheme(rootLayout, savedTheme)
 
-        // Bottom ribbon
+        //bottom ribbon functionality
         val bottomRibbon: BottomRibbon = findViewById(R.id.bottomRibbon)
         bottomRibbon.btnHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
-        }
+        }//to home page
         bottomRibbon.btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
-        }
+        }//to settings page
         bottomRibbon.btnTag.setOnClickListener {
             startActivity(Intent(this, ETagsActivity::class.java))
-        }
-    }
+        }//to expense tags page
+    }//end of onCreate
 
     private fun updateIcon() {
         val name = "${selectedColor}${selectedIcon}"
         val resId = resources.getIdentifier(name, "drawable", packageName)
         eTagIcon.setImageResource(if (resId != 0) resId else R.drawable.clrgry)
     }
-}
+}//end of main class

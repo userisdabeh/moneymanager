@@ -229,6 +229,7 @@
             android:background="@drawable/clrgry" />
     </LinearLayout> <!--end of color choices-->
 
+    <!-- Include bottom ribbon -->
     <Button
         android:id="@+id/incAddButton"
         android:layout_width="60dp"
@@ -238,9 +239,8 @@
         android:text="Add"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-    <!-- Include bottom ribbon -->
     <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.BottomRibbon
         android:id="@+id/bottomRibbon"
         android:layout_width="match_parent"
