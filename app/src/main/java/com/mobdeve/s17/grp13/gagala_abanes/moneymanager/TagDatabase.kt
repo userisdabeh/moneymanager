@@ -6,14 +6,14 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class TagDatabase(context: Context) :
-    SQLiteOpenHelper(context, "tags.db", null, 4) {
+    SQLiteOpenHelper(context, "tags.db", null, 9) {
 
     override fun onCreate(db: SQLiteDatabase) {
         //create exp tags table
         db.execSQL("""
             CREATE TABLE expense_tags(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                iconName TEXT NOT NULL
+                iconName TEXT NOT NULL UNIQUE
             );
         """.trimIndent())
 
@@ -21,12 +21,12 @@ class TagDatabase(context: Context) :
         db.execSQL("""
             CREATE TABLE income_tags(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                iconName TEXT NOT NULL
+                iconName TEXT NOT NULL UNIQUE
             );
         """.trimIndent())
 
         // insert default tags for expense
-        val defaultTags = listOf("education", "food", "leisure", "home", "transportation")
+        val defaultTags = listOf("def_bluedu", "def_redfood", "def_grnles", "def_ylwhome", "def_orgtranspo")
         for (tag in defaultTags) {
             val cv = ContentValues()
             cv.put("iconName", tag)
@@ -63,15 +63,21 @@ class TagDatabase(context: Context) :
     }
 
     //delete tags
+    //delete tags
     fun deleteExpenseTag(iconName: String) {
+        val defaultTags = listOf("def_bluedu", "def_redfood", "def_grnles", "def_ylwhome", "def_orgtranspo")
+        if (iconName in defaultTags) return  // prevent deletion of default tags
         val db = writableDatabase
         db.delete("expense_tags", "iconName=?", arrayOf(iconName))
     }
 
     fun deleteIncomeTag(iconName: String) {
+        val defaultTags = listOf("def_bluedu", "def_redfood", "def_grnles", "def_ylwhome", "def_orgtranspo")
+        if (iconName in defaultTags) return  // prevent deletion of default tags
         val db = writableDatabase
         db.delete("income_tags", "iconName=?", arrayOf(iconName))
     }
+
 
     //get all tags
     fun getAllExpenseTags(): List<String> {
