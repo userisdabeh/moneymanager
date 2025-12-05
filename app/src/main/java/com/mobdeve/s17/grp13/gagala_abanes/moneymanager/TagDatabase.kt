@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class TagDatabase(context: Context) :
-    SQLiteOpenHelper(context, "tags.db", null, 3) {
+    SQLiteOpenHelper(context, "tags.db", null, 4) {
 
     override fun onCreate(db: SQLiteDatabase) {
         //create exp tags table
