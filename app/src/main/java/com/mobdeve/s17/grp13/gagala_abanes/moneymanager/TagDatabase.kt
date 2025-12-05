@@ -24,6 +24,21 @@ class TagDatabase(context: Context) :
                 iconName TEXT NOT NULL
             );
         """.trimIndent())
+
+        // insert default tags for expense
+        val defaultTags = listOf("education", "food", "leisure", "home", "transportation")
+        for (tag in defaultTags) {
+            val cv = ContentValues()
+            cv.put("iconName", tag)
+            db.insert("expense_tags", null, cv)
+        }
+
+        // insert default tags for income
+        for (tag in defaultTags) {
+            val cv = ContentValues()
+            cv.put("iconName", tag)
+            db.insert("income_tags", null, cv)
+        }
     }
 
     override fun onUpgrade(db: SQLiteDatabase, old: Int, new: Int) {
