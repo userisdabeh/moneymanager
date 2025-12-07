@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220dp"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#2D2D2D"
+    android:padding="20dp">
+
+    <com.mobdeve.s17.grp13.gagala_abanes.moneymanager.DonutView
+        android:id="@+id/donutView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/textAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PHP 0.00"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+    
+    <ImageButton
+        android:id="@+id/btnAdd"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/ic_rounded_add_button"
+        android:padding="5dp"
+        android:src="@drawable/ic_rounded_add_button"
+        app:tint="#FFFFFF"
+        android:contentDescription="Add" />
+</FrameLayout>

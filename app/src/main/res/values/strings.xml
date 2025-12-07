@@ -7,5 +7,9 @@
         <item>Light</item>
         <item>Dark</item>
     </string-array>
+    
+    <string-array name="currency_options">
+        <item>PHP</item>
+    </string-array>
 
 </resources>

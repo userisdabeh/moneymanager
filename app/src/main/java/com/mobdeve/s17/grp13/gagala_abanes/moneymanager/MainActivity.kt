@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import android.widget.Button
 import android.content.Intent
 import android.view.View
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s17.grp13.gagala_abanes.moneymanager.TagAdapter
 
@@ -33,6 +34,13 @@ class MainActivity : ComponentActivity() {
         val button: Button = findViewById(R.id.currSelector)
         button.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java) //CHANGE TO SWAP CURRENCY LATER
+            startActivity(intent)
+        }
+
+        val donutCard: View = findViewById(R.id.donutCard)
+        val btnAdd: ImageButton = donutCard.findViewById(R.id.btnAdd)
+        btnAdd.setOnClickListener {
+            val intent = Intent(this, AddTransactionActivity::class.java)
             startActivity(intent)
         }
 

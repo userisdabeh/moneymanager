@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.androidx.gridlayout)
     testImplementation(libs.junit)
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     androidTestImplementation(libs.androidx.junit)
