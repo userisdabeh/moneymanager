@@ -1,6 +1,7 @@
 package com.mobdeve.s17.grp13.gagala_abanes.moneymanager
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -21,6 +22,9 @@ class AddTransactionActivity: ComponentActivity() {
     private lateinit var photoUri: Uri
 
     fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
+
+    private val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
+    private val CAMERA_REQUEST_CODE = 999
 
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
@@ -151,12 +155,20 @@ class AddTransactionActivity: ComponentActivity() {
         builder.setItems(options) {
             dialog, which ->
                 when (which) {
-                    0 -> openCamera()
+                    0 -> checkCameraPermission()
                     1 -> openGallery()
                 }
         }
 
         builder.show()
+    }
+
+    private fun checkCameraPermission() {
+        if(checkSelfPermission(CAMERA_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(CAMERA_PERMISSION), CAMERA_REQUEST_CODE)
+        } else {
+            openCamera()
+        }
     }
 
     private val REQUEST_CAMERA = 100
@@ -218,5 +230,18 @@ class AddTransactionActivity: ComponentActivity() {
     private fun saveBitmapToUri(bitmap: android.graphics.Bitmap) : Uri {
         val path = android.provider.MediaStore.Images.Media.insertImage(contentResolver, bitmap, "Title", null)
         return Uri.parse(path)
+    }
+
+    @Deprecated ("Deprecated in Java")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
