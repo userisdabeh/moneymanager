@@ -61,7 +61,15 @@ class SettingsActivity : ComponentActivity() {
             AlertDialog.Builder(this)
                 .setTitle("Confirm Delete")
                 .setMessage("Are you sure you want to delete all data?")
-                .setPositiveButton("Yes") { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton("Yes") { dialog, _ ->
+                    val transactionDb = TransactionDatabase(this)
+                    val db = transactionDb.writableDatabase
+
+                    db.delete("transactions", null, null)
+                    db.close()
+
+                    dialog.dismiss()
+                }
                 .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
                 .show()
         }
