@@ -169,12 +169,12 @@ class AddTransactionActivity: ComponentActivity() {
         //end of bottom ribbon functionality
     }
 
-    private fun updateTagIcons(tags: List<String>) {
+    private fun updateTagIcons(tags: List<TagItem>) {
         gridLayout.removeAllViews()
         selectedTagButton = null
 
-        for (iconName in tags) {
-            val drawableId = resources.getIdentifier(iconName, "drawable", packageName)
+        for (tagItem in tags) {
+            val drawableId = resources.getIdentifier(tagItem.iconName, "drawable", packageName)
 
             val button = ImageButton(this).apply {
                 setImageResource(drawableId)
@@ -196,7 +196,7 @@ class AddTransactionActivity: ComponentActivity() {
                 selectedTagButton?.setBackgroundColor(Color.TRANSPARENT)
                 button.setBackgroundColor(Color.LTGRAY)
                 selectedTagButton = button
-                selectedTag = iconName
+                selectedTag = tagItem.displayName
             }
         }
 

@@ -6,14 +6,15 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class TagDatabase(context: Context) :
-    SQLiteOpenHelper(context, "tags.db", null, 9) {
+    SQLiteOpenHelper(context, "tags.db", null, 10) {
 
     override fun onCreate(db: SQLiteDatabase) {
         //create exp tags table
         db.execSQL("""
             CREATE TABLE expense_tags(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                iconName TEXT NOT NULL UNIQUE
+                iconName TEXT NOT NULL UNIQUE,
+                displayName TEXT NOT NULL
             );
         """.trimIndent())
 
@@ -21,22 +22,26 @@ class TagDatabase(context: Context) :
         db.execSQL("""
             CREATE TABLE income_tags(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                iconName TEXT NOT NULL UNIQUE
+                iconName TEXT NOT NULL UNIQUE,
+                displayName TEXT NOT NULL
             );
         """.trimIndent())
 
         // insert default tags for expense
-        val defaultTags = listOf("def_bluedu", "def_redfood", "def_grnles", "def_ylwhome", "def_orgtranspo")
-        for (tag in defaultTags) {
-            val cv = ContentValues()
-            cv.put("iconName", tag)
-            db.insert("expense_tags", null, cv)
-        }
+        val defaultTags = listOf(
+            "def_bluedu" to "Food",
+            "def_redfood" to "Education",
+            "def_grnles" to "Leisure",
+            "def_ylwhome" to "Home",
+            "def_orgtranspo" to "Transportation")
 
-        // insert default tags for income
-        for (tag in defaultTags) {
-            val cv = ContentValues()
-            cv.put("iconName", tag)
+        for ((iconName, displayName) in defaultTags) {
+            val cv = ContentValues().apply{
+                put("iconName", iconName)
+                put("displayName", displayName)
+            }
+
+            db.insert("expense_tags", null, cv)
             db.insert("income_tags", null, cv)
         }
     }
@@ -50,15 +55,19 @@ class TagDatabase(context: Context) :
     //add tags
     fun insertExpenseTag(iconName: String) {
         val db = writableDatabase
-        val cv = ContentValues()
-        cv.put("iconName", iconName)
+        val cv = ContentValues().apply{
+            put("iconName", iconName)
+            put("displayName", iconName)
+        }
         db.insert("expense_tags", null, cv)
     }
 
     fun insertIncomeTag(iconName: String) {
         val db = writableDatabase
-        val cv = ContentValues()
-        cv.put("iconName", iconName)
+        val cv = ContentValues().apply {
+            put("iconName", iconName)
+            put("displayName", iconName)
+        }
         db.insert("income_tags", null, cv)
     }
 
@@ -80,23 +89,27 @@ class TagDatabase(context: Context) :
 
 
     //get all tags
-    fun getAllExpenseTags(): List<String> {
+    fun getAllExpenseTags(): List<TagItem> {
         val db = readableDatabase
-        val list = mutableListOf<String>()
-        val c = db.rawQuery("SELECT iconName FROM expense_tags", null)
+        val list = mutableListOf<TagItem>()
+        val c = db.rawQuery("SELECT iconName, displayName FROM expense_tags", null)
         while (c.moveToNext()) {
-            list.add(c.getString(0))
+            val iconName = c.getString(0)
+            val displayName = c.getString(1)
+            list.add(TagItem(iconName, displayName))
         }
         c.close()
         return list
     }
 
-    fun getAllIncomeTags(): List<String> {
+    fun getAllIncomeTags(): List<TagItem> {
         val db = readableDatabase
-        val list = mutableListOf<String>()
-        val c = db.rawQuery("SELECT iconName FROM income_tags", null)
+        val list = mutableListOf<TagItem>()
+        val c = db.rawQuery("SELECT iconName, displayName FROM income_tags", null)
         while (c.moveToNext()) {
-            list.add(c.getString(0))
+            val iconName = c.getString(0)
+            val displayName = c.getString(1)
+            list.add(TagItem(iconName, displayName))
         }
         c.close()
         return list

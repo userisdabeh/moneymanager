@@ -72,8 +72,8 @@ class ETagsActivity : ComponentActivity() {
     private fun loadSavedIcons() {
         val saved = db.getAllExpenseTags()
 
-        saved.forEach { iconName ->
-            addIconToGrid(iconName)
+        saved.forEach { tagItem ->
+            addIconToGrid(tagItem.iconName)
         }
     }
 

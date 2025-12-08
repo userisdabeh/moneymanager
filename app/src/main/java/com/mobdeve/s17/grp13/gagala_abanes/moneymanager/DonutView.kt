@@ -10,6 +10,8 @@ class DonutView @JvmOverloads constructor (context: Context, attrs: AttributeSet
     private var ringColor: Int = Color.LTGRAY;
     private var fillColor: Int = Color.GREEN;
 
+    private var progress: Float = 0f
+
     private val ringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
@@ -30,11 +32,12 @@ class DonutView @JvmOverloads constructor (context: Context, attrs: AttributeSet
 
         ringPaint.color = ringColor
         ringPaint.strokeWidth = ringWidth
+        canvas.drawCircle(cx, cy, radius, ringPaint);
 
         fillPaint.color = fillColor
 
-        canvas.drawCircle(cx, cy, radius, ringPaint);
-        canvas.drawCircle(cx, cy, radius - (ringWidth / 2f), fillPaint)
+        val rect = RectF(cx - radius, cy - radius, cx + radius, cy + radius)
+        canvas.drawArc(rect, -90f, progress * 360f, true, fillPaint)
     }
 
     fun setColors(ring: Int, fill: Int) {
@@ -45,6 +48,11 @@ class DonutView @JvmOverloads constructor (context: Context, attrs: AttributeSet
 
     fun setRingWidth(dp: Float) {
         ringWidth = dp * resources.displayMetrics.density
+        invalidate()
+    }
+
+    fun setProgress(value: Float) {
+        progress = value.coerceIn(0f, 1f)
         invalidate()
     }
 }

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TransactionAdapter (private var transactions: List<Transaction>) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+class TransactionAdapter (private var transactions: List<Transaction>, private val tagMap: Map<String, String>) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
     inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tagLogo: ImageView = itemView.findViewById(R.id.catLogo)
@@ -26,7 +26,7 @@ class TransactionAdapter (private var transactions: List<Transaction>) : Recycle
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
         Log.d("MoneyManagerDB", "Binding transaction: ${transaction.tag} ${transaction.amount}")
-        holder.thCategory.text = transaction.tag
+        holder.thCategory.text = tagMap[transaction.tag] ?: transaction.tag
         holder.thAmount.text = "PHP ${String.format("%.2f", transaction.amount)}"
     }
 

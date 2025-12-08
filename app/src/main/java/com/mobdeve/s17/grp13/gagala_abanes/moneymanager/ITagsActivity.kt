@@ -78,8 +78,8 @@ class ITagsActivity : ComponentActivity() {
     private fun loadSavedIcons() {
         val saved = db.getAllIncomeTags()
 
-        saved.forEach { iconName ->
-            addIconToGrid(iconName)
+        saved.forEach { tagItem ->
+            addIconToGrid(tagItem.iconName)
         }
     }
 
