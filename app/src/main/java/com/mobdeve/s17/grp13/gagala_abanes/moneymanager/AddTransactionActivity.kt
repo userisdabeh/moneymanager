@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.*
@@ -18,13 +19,30 @@ import java.io.IOException
 
 class AddTransactionActivity: ComponentActivity() {
 
+    private lateinit var gridLayout: GridLayout
+    private var selectedTagButton: ImageButton? = null
+    private var selectedTransactionType = "Expense"
+    private var selectedTag: String? = null
+
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var photoUri: Uri
+
+    private lateinit var transactionDb: TransactionDatabase
+    private lateinit var tagDb: TagDatabase
+
+    private lateinit var spinner: Spinner
+    private lateinit var dateText: TextView
+    private lateinit var addTransactionBtn: Button
+    private lateinit var amountEditText: EditText
+    private lateinit var commentsEditText: EditText
+
 
     fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 
     private val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
     private val CAMERA_REQUEST_CODE = 999
+
+    private val MAX_PHOTOS = 6
 
     private fun applyTheme(layout: View, mode: String) {
         when (mode) {
@@ -38,8 +56,31 @@ class AddTransactionActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaction)
 
-        val spinner: Spinner = findViewById(R.id.currencySpinner)
+        spinner = findViewById(R.id.currencySpinner)
         val categories = resources.getStringArray(R.array.currency_options)
+
+        tagDb = TagDatabase(this)
+        transactionDb = TransactionDatabase(this)
+
+        val expenseTags = tagDb.getAllExpenseTags()
+        val incomeTags = tagDb.getAllIncomeTags()
+
+        var selectedButton: ImageButton? = null
+
+        val dateInput: ImageButton = findViewById(R.id.dateSelector)
+        dateText = findViewById(R.id.selectedDate)
+
+        addTransactionBtn = findViewById(R.id.addTransactionBtn)
+        amountEditText = findViewById(R.id.amountEditText)
+        commentsEditText = findViewById(R.id.commentsEditText)
+
+        val calendar = java.util.Calendar.getInstance()
+        val todayString = "${calendar.get(java.util.Calendar.MONTH) + 1}/${calendar.get(java.util.Calendar.DAY_OF_MONTH)}/${calendar.get(java.util.Calendar.YEAR)}"
+
+        gridLayout = findViewById(R.id.tagGrid)
+
+        val expenseBtn: Button = findViewById(R.id.expenseBtn)
+        val incomeBtn: Button = findViewById(R.id.incomeBtn)
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -53,51 +94,29 @@ class AddTransactionActivity: ComponentActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //do nothing
             }
-
         }
 
-        val db = TagDatabase(this)
-        val expenseTags = db.getAllExpenseTags()
-        val incomeTags = db.getAllIncomeTags()
+        selectedTransactionType = "Expense"
+        expenseBtn.setBackgroundColor(Color.LTGRAY)
+        incomeBtn.setBackgroundColor(Color.BLACK)
+        updateTagIcons(expenseTags)
 
-        var selectedButton: ImageButton? = null
-
-        val gridLayout: GridLayout = findViewById(R.id.tagGrid)
-
-        for (iconName in expenseTags) {
-            val drawableId = resources.getIdentifier(iconName, "drawable", packageName)
-
-            val button = ImageButton(this).apply {
-                setImageResource(drawableId)
-                scaleType = ImageView.ScaleType.CENTER_INSIDE
-                setPadding(16, 16, 16, 16)
-                setBackgroundColor(Color.TRANSPARENT)
-            }
-
-            val params = GridLayout.LayoutParams().apply {
-                width = 80.dpToPx()
-                height = 80.dpToPx()
-                columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.LEFT)
-                setMargins(8, 8, 8, 8)
-            }
-
-            gridLayout.addView(button, params)
-
-            button.setOnClickListener {
-                selectedButton?.setBackgroundColor(Color.TRANSPARENT)
-
-                button.setBackgroundColor(Color.LTGRAY)
-                selectedButton = button
-
-                val selectedIcon = iconName
-            }
+        expenseBtn.setOnClickListener {
+            selectedTransactionType = "Expense"
+            expenseBtn.setBackgroundColor(Color.LTGRAY)
+            incomeBtn.setBackgroundColor(Color.BLACK)
+            updateTagIcons(expenseTags)
         }
 
-        val dateInput: ImageButton = findViewById(R.id.dateSelector)
-        val dateText: TextView = findViewById(R.id.selectedDate)
+        incomeBtn.setOnClickListener {
+            selectedTransactionType = "Income"
+            incomeBtn.setBackgroundColor(Color.LTGRAY)
+            expenseBtn.setBackgroundColor(Color.BLACK)
+            updateTagIcons(incomeTags)
+        }
 
-        val calendar = java.util.Calendar.getInstance()
-        val todayString = "${calendar.get(java.util.Calendar.MONTH) + 1}/${calendar.get(java.util.Calendar.DAY_OF_MONTH)}/${calendar.get(java.util.Calendar.YEAR)}"
+        updateTagIcons(expenseTags)
+
         dateText.text = todayString
 
         dateInput.setOnClickListener {
@@ -125,6 +144,8 @@ class AddTransactionActivity: ComponentActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = photoAdapter
 
+        saveTransaction()
+
         //light mode stuff
         val prefs = getSharedPreferences("app_theme", MODE_PRIVATE)
         val savedTheme = prefs.getString("theme", "Default")!!
@@ -148,7 +169,45 @@ class AddTransactionActivity: ComponentActivity() {
         //end of bottom ribbon functionality
     }
 
+    private fun updateTagIcons(tags: List<String>) {
+        gridLayout.removeAllViews()
+        selectedTagButton = null
+
+        for (iconName in tags) {
+            val drawableId = resources.getIdentifier(iconName, "drawable", packageName)
+
+            val button = ImageButton(this).apply {
+                setImageResource(drawableId)
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
+                setPadding(16, 16, 16,16)
+                setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            val params = GridLayout.LayoutParams().apply{
+                width = 80.dpToPx()
+                height = 80.dpToPx()
+                columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.LEFT)
+                setMargins(8,8,8,8)
+            }
+
+            gridLayout.addView(button, params)
+
+            button.setOnClickListener {
+                selectedTagButton?.setBackgroundColor(Color.TRANSPARENT)
+                button.setBackgroundColor(Color.LTGRAY)
+                selectedTagButton = button
+                selectedTag = iconName
+            }
+        }
+
+    }
+
     private fun showPhotoOptions() {
+        if (photoAdapter.photos.size >= MAX_PHOTOS){
+            Toast.makeText(this, "You can only add $MAX_PHOTOS photos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val options = arrayOf("Camera", "Gallery")
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("Add Photo")
@@ -241,6 +300,58 @@ class AddTransactionActivity: ComponentActivity() {
                 openCamera()
             } else {
                 Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (::photoUri.isInitialized) {
+            outState.putString("photoUri", photoUri.toString())
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        savedInstanceState.getString("photoUri")?.let {
+            photoUri = Uri.parse(it)
+        }
+    }
+
+    private fun saveTransaction() {
+        addTransactionBtn.setOnClickListener {
+            val enteredAmount = amountEditText.text.toString()
+            if(enteredAmount.isBlank()) {
+                Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (selectedTag == null) {
+                Toast.makeText(this, "Please select a tag", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val amount = enteredAmount.toDouble()
+
+            val photoUriStrings: List<String> = photoAdapter.photos.map{ it.toString() }
+
+            val id = transactionDb.insertTransaction(
+                type = selectedTransactionType,
+                amount = amount,
+                currency = spinner.selectedItem.toString(),
+                tag = selectedTag!!,
+                date = dateText.text.toString(),
+                comments = commentsEditText.text.toString(),
+                photoUris = photoUriStrings
+            )
+
+            if (id > 0) {
+                Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK)
+                finish()
+            } else {
+                Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
